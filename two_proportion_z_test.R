@@ -2,17 +2,30 @@
 
 library(readxl)
 library(dplyr)
+library(tibble)
 
 responses <-  read_excel("C:/Users/m1012129/Downloads/responses.xlsx")
 
+# Creating the table
+significance <- tibble(
+  answer = character(),  # Column 'answer' as text
+  time1 = character(),   # Column 'time1' as text
+  time2 = character(),   # Column 'time2' as text
+  pvalue = double()     # Column 'pvalue' as a decimal
+)
+
+time1 = "April 2023"
+time2 = "October 2022"
+
+answer1 = "Yes, I fully understand Defra's vision for farming"
 
 ### find the latest data ###
 
 latest <- responses %>%
-  filter(time == "April 2023")
+  filter(time == time1)
 
 previous <- responses %>%
-  filter(time == "October 2022")
+  filter(time == time2)
 
 answer1 = "Yes, I fully understand Defra's vision for farming"
   
@@ -73,6 +86,7 @@ if (abs(z) > critical_value) {
 p_value <- 2 * (1 - pnorm(abs(z)))
 cat("The p-value is:", p_value, "\n")
 
-# Step 8: Calculate the p-value
-p_value <- 2 * (1 - pnorm(abs(z)))
-cat("The p-value is:", p_value, "\n")
+# Step 9: Add to the table
+
+significance <- significance %>%
+  add_row(answer = answer1, time1 = time1, time2 = time2, pvalue = p_value)
