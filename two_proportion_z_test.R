@@ -8,18 +8,17 @@ responses <-  read_excel("C:/Users/m1012129/Downloads/responses.xlsx")
 
 # Creating the table
 significance <- tibble(
+  question = character(), # Column 'question' as text
   answer = character(),  # Column 'answer' as text
   time1 = character(),   # Column 'time1' as text
   time2 = character(),   # Column 'time2' as text
   pvalue = double()     # Column 'pvalue' as a decimal
 )
 
-time1 = "April 2023"
-time2 = "October 2022"
-
-answer1 = "Yes, I fully understand Defra's vision for farming"
-
 ### find the latest data ###
+
+time1 = "April 2023"
+time2 = "April 2022"
 
 latest <- responses %>%
   filter(time == time1)
@@ -28,6 +27,7 @@ previous <- responses %>%
   filter(time == time2)
 
 answer1 = "Yes, I fully understand Defra's vision for farming"
+question1 = "Do you know what Defra's vision means for farming?"
   
 ### Data ###
   
@@ -89,4 +89,5 @@ cat("The p-value is:", p_value, "\n")
 # Step 9: Add to the table
 
 significance <- significance %>%
-  add_row(answer = answer1, time1 = time1, time2 = time2, pvalue = p_value)
+  add_row(question = question1, answer = answer1, time1 = time1, time2 = time2, pvalue = p_value)
+
