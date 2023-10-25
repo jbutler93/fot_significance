@@ -78,25 +78,23 @@ alpha <- 0.05
 # Step 6: Find the critical value for the test statistic
 critical_value <- qnorm(1 - alpha / 2)
 
-### Results ###
+# Step 7: Print the variables
 
 print(question1)
 print(answer1)
 print(time1)
 print(time2)
 
-# Step 7: Calculate the p-value
+# Step 8: Calculate the p-value
 p_value <- 2 * (1 - pnorm(abs(z)))
 cat("The p-value is:", p_value, "\n")
 
-
-
-# Step 8: Compare the test statistic with the critical value
+# Step 9: Compare the test statistic with the critical value
 if (abs(z) > critical_value) {
-  cat("Reject the null hypothesis. There is a significant difference between the proportions.\n")
-} else {
-  cat("Fail to reject the null hypothesis. There is no significant difference between the proportions.\n")
-}
+  cat("Reject the null hypothesis. There is a significant difference between the proportions.\n")} 
+else {
+  cat("Fail to reject the null hypothesis. There is no significant difference between the proportions.\n")}
+
 }
 
 
