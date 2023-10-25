@@ -1,3 +1,5 @@
+### Setup
+
 ### Load Excel ###
 
 library(readxl)
@@ -7,7 +9,9 @@ library(data.table)
 
 responses <-  read_excel("C:/Users/m1012129/Downloads/responses.xlsx")
 
-# Creating the table
+times <- c("April 2023", "October 2022", "April 2022", "October 2021", "April 2021", "October 2020", "September 2019")
+
+## Creating the table
 significance <- data.frame(
   question = character(), # Column 'question' as text
   answer = character(),  # Column 'answer' as text
@@ -96,7 +100,18 @@ if (abs(z) > critical_value) {
 }
 
 
-# Running of process
+### Running of Answers
 
-fot_significance("October 2022", "Do you know what Defra's vision means for farming?", "Yes, I fully understand Defra's vision for farming")
-fot_significance("April 2022", "Do you know what Defra's vision means for farming?", "Yes, I fully understand Defra's vision for farming")
+## Do you know what Defra's vision means for farming?
+
+for (time in times) {
+  fot_significance(time, "Do you know what Defra's vision means for farming?", "Yes, I fully understand Defra's vision for farming")}
+
+for (time in times) {
+  fot_significance(time, "Do you know what Defra's vision means for farming?", "Yes, I know roughly")}
+
+for (time in times) {
+  fot_significance(time, "Do you know what Defra's vision means for farming?", "No, I don't know, but would be interested to know more")}
+
+for (time in times) {
+  fot_significance(time, "Do you know what Defra's vision means for farming?", "No, I don't need to know")}
