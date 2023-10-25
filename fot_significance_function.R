@@ -3,35 +3,32 @@
 library(readxl)
 library(dplyr)
 library(tibble)
+library(data.table)
 
 responses <-  read_excel("C:/Users/m1012129/Downloads/responses.xlsx")
 
 # Creating the table
-significance <- tibble(
+significance <- data.frame(
   question = character(), # Column 'question' as text
   answer = character(),  # Column 'answer' as text
-  time1 = character(),   # Column 'time1' as text
-  time2 = character(),   # Column 'time2' as text
+  timeone = character(),   # Column 'time1' as text
+  timetwo = character(),   # Column 'time2' as text
   pvalue = double()     # Column 'pvalue' as a decimal
 )
 
-fot_significance <- function(timeinput1, timeinput2, questioninput, answerinput) {
+### Function for z-test
+
+fot_significance <- function(timeinput1, questioninput, answerinput) {
 
 ### Input the function variables ###
 
-time1 = timeinput1
-time2 = timeinput2
-answer1 <- answerinput
-question1 <- questioninput
-
-
-### Add these to the table ###
-
-significance <- significance %>%
-  add_row(question = question1, answer = answer1, time1 = time1, time2 = time2)
+time1 <- "April 2023" # The lastest interation of the survey
+time2 <- timeinput1 # The iteration being compared to
+answer1 <- answerinput # The specific answer
+question1 <- questioninput # The specific Survey Question
   
 ### Data ###
-  
+
 latest <- responses %>%
   filter(time == time1)
 
@@ -43,7 +40,6 @@ latest_question <- latest %>%
 
 previous_question <- previous %>%
   filter(answer == answer1) # create a table of the latest time
-
 
 # Group 1
 n1 <- latest_question$total # Sample size for group 1
@@ -80,21 +76,27 @@ critical_value <- qnorm(1 - alpha / 2)
 
 ### Results ###
 
-# Step 7: Compare the test statistic with the critical value
+print(question1)
+print(answer1)
+print(time1)
+print(time2)
+
+# Step 7: Calculate the p-value
+p_value <- 2 * (1 - pnorm(abs(z)))
+cat("The p-value is:", p_value, "\n")
+
+
+
+# Step 8: Compare the test statistic with the critical value
 if (abs(z) > critical_value) {
   cat("Reject the null hypothesis. There is a significant difference between the proportions.\n")
 } else {
   cat("Fail to reject the null hypothesis. There is no significant difference between the proportions.\n")
 }
-
-# Step 8: Calculate the p-value
-p_value <- 2 * (1 - pnorm(abs(z)))
-cat("The p-value is:", p_value, "\n")
-
-significance <- significance %>%
-  add_row(pvalue = p_value)
-
 }
 
-fot_significance("April 2023", "October 2022", "Do you know what Defra's vision means for farming?", "Yes, I fully understand Defra's vision for farming")
-fot_significance("April 2023", "April 2022", "Do you know what Defra's vision means for farming?", "Yes, I fully understand Defra's vision for farming")
+
+# Running of process
+
+fot_significance("October 2022", "Do you know what Defra's vision means for farming?", "Yes, I fully understand Defra's vision for farming")
+fot_significance("April 2022", "Do you know what Defra's vision means for farming?", "Yes, I fully understand Defra's vision for farming")
