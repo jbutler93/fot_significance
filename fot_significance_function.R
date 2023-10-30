@@ -95,6 +95,10 @@ if (abs(z) > critical_value) {
 else {
   cat("Fail to reject the null hypothesis. There is no significant difference between the proportions.\n")}
 
+function_df <- data.frame(question = question1, answer = answer1, timeone = time1, timetwo = time2, pvalue = p_value)
+
+significance <<- rbind(significance, function_df)
+
 }
 
 
